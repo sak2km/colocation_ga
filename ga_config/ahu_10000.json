@@ -2,7 +2,6 @@
   "task": "strict_ga",
   "job_name": "AHU",
   "seed": 2,
-  // "corr_matrix_path": "data/AHU/matrix.npz",
   "corr_matrix_path": "score_matrix.npz",
   "output_path": "./__output__/GA/AHU/",
   "total_room_count": 50,

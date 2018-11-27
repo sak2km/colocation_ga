@@ -29,11 +29,12 @@ def run(config: config_loader.ColocationConfig, vav_counts):
     corr_matrix = matrix_loader.load_matrix(config.corr_matrix_path)
 
 
-    # corr_matrix.shape = (24, 120)
+    # current corr_matrix.shape = (24, 120)
+    
     # config.room_count = 113
+    # vav_counts = array([17, 4, 12, 12, 13, 19, 10, 26]), sum = 113
     # len(vav_counts) = 8
-    # 121 ?
-    # vav_counts = array([17, 4, 12, 12, 13, 19, 10, 26])
+    # correct corr_matrix.shape = (121, 121)?
     
     # pdb.set_trace()
     assert corr_matrix.shape[0] == config.room_count + len(vav_counts)
