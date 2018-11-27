@@ -1,0 +1,19 @@
+{
+    "ts_data_path": "data/AHU/dezhi/data.npz",
+    "v_counts_path": "data/AHU/dezhi/v_counts.npz",
+    "max_iteration": 3,
+    "population_continuous": false,
+    "cache_dir": "__output__/AHU_Refine_mask",
+    "ga_config": {
+        "n_population": 300,
+        "n_generation": 2000,
+        "n_survival": 200,
+        "n_replaced": 100,
+        "mutation_rate": 0.02
+    },
+    "mask_config": {
+        "k": 3,
+        "maxpool_width": 20,
+        "vote_threshold": 0
+    }
+}

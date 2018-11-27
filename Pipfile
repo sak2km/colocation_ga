@@ -1,0 +1,40 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+cython = "*"
+numpy = "*"
+scipy = "*"
+terminaltables = "*"
+python-rapidjson = "*"
+dataclasses = "*"
+matplotlib = "*"
+progressbar2 = "*"
+pandas = "*"
+metric-learn = "*"
+pymongo = "*"
+seaborn = "*"
+click = "*"
+stldecompose = "*"
+torch = "*"
+torchvision = "*"
+numba = "*"
+pipfile = "*"
+flask = "*"
+
+[dev-packages]
+pytest = "*"
+pylint = "*"
+ipython = "*"
+"gprof2dot" = "*"
+rope = "*"
+pexpect = "*"
+jedi = "*"
+mypy = "*"
+"flake8" = "*"
+black = "*"
+
+[pipenv]
+allow_prereleases = false
