@@ -30,7 +30,7 @@ def run(config: config_loader.ColocationConfig, vav_counts):
 
 
     # current corr_matrix.shape = (24, 120)
-    
+
     # config.room_count = 113
     # vav_counts = array([17, 4, 12, 12, 13, 19, 10, 26]), sum = 113
     # len(vav_counts) = 8

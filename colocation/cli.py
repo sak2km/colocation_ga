@@ -303,36 +303,33 @@ def ahu_vav_dezhi_load(input_file, output_dir, n_ahu):
 @click.command("ga-ahu")
 @cli.option_config_file()
 @click.option("--vav-counts", required=True)
+@click.option("--corr-matrix-path", required=True)
 @cli.option_verbose()
-def ga_ahu(config_file, vav_counts, verbose):
+def ga_ahu(config_file, vav_counts, corr_matrix_path, verbose):
+    from .genetic_algorithm.tasks import ahu_iterative_ga
     import numpy as np
-    import random
-    import progressbar
-    from .genetic_algorithm.tasks import ahu_ga
-    from .genetic_algorithm.data_loader import config_loader
 
-    np.random.seed(11)
-    vav_counts = io.read_file(vav_counts)
-    LOG.info("Sum of v counts = %d", np.sum(vav_counts))
-    LOG.info("Len of v counts = %d", len(vav_counts))
+    config = io.read_json(config_file)
+    log_helper.configure_logger(verbose, to_stderr=True)
+    v_counts = io.read_file(vav_counts)
+    n_vav = np.sum(v_counts)
+    n_population = config["n_population"]
+    corr_matrix = io.read_file(corr_matrix_path)
 
-    config = config_loader.load_config(
-        config_file,
-        verbose=verbose >= 2,
-        room_count=np.sum(vav_counts),
-        total_room_count=np.sum(vav_counts),
+    perfect_corr = ahu_iterative_ga.perfect_corr_matrix(v_counts)
+    accuracy_func = ahu_iterative_ga.compile_vav_ahu_score(perfect_corr, v_counts)
+    # modify here:
+    score_func = ahu_iterative_ga.compile_vav_ahu_score(corr_matrix, v_counts)
+    result = ahu_iterative_ga.run_ga(
+        initial_population=np.array(
+            [np.random.permutation(n_vav) for _ in range(n_population)]
+        ).reshape(n_population, -1, 1),
+        score_func = score_func,
+        **config
     )
-    io.make_dir(config.base_file_name)
-
-    log_helper.configure_logger(
-        verbose, output_file=config.join_name("colocation.log"), to_stderr=True
-    )
-    LOG.info("Started Task AHU GA")
-
-    _, accuracy, _ = ahu_ga.run(config, vav_counts)
-
-    LOG.info("Ending Task")
-
+    accuracy = accuracy_func(result)
+    print("Accuracy = " + str(accuracy))
+   
 
 @click.command("ahu-mask-refine")
 @cli.option_config_file()
